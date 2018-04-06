@@ -2,6 +2,8 @@ package patmat
 
 import common._
 
+import scala.collection.mutable
+
 /**
  * Assignment 4: Huffman coding
  *
@@ -18,15 +20,25 @@ object Huffman {
    * present in the leaves below it. The weight of a `Fork` node is the sum of the weights of these
    * leaves.
    */
-    abstract class CodeTree
+  abstract class CodeTree
   case class Fork(left: CodeTree, right: CodeTree, chars: List[Char], weight: Int) extends CodeTree
   case class Leaf(char: Char, weight: Int) extends CodeTree
   
 
   // Part 1: Basics
-    def weight(tree: CodeTree): Int = ??? // tree match ...
+  def weight(tree: CodeTree): Int = {
+    tree match{
+      case Fork(left, right, chars, weight) => weight + weight(left) + weight(right)
+      case Leaf(char, weight) => weight
+    }
+  } // tree match ...
   
-    def chars(tree: CodeTree): List[Char] = ??? // tree match ...
+  def chars(tree: CodeTree): List[Char] = {
+    tree match{
+      case Fork(left, right, chars, weight) => chars
+      case Leaf(char, weight) => char :: Nil
+    }
+  } // tree match ...
   
   def makeCodeTree(left: CodeTree, right: CodeTree) =
     Fork(left, right, chars(left) ::: chars(right), weight(left) + weight(right))
@@ -69,7 +81,32 @@ object Huffman {
    *       println("integer is  : "+ theInt)
    *   }
    */
-    def times(chars: List[Char]): List[(Char, Int)] = ???
+    def times(chars: List[Char]): List[(Char, Int)] = {
+      //check the first char
+      //form a pair
+      //add into the list
+
+      def timesHelper(chars: List[Char], counter: List[(Char, Int)]): List[(Char, Int)] = {
+        chars match {
+          case Nil => counter
+          case x :: xs => {
+            timesHelper(xs, counterHelper(x, counter))
+          }
+        }
+      }
+
+      def counterHelper(char: Char, counter: List[(Char, Int)]): List[(Char, Int)] = {
+        counter match {
+          case Nil => (char, 1) :: Nil
+          case pair :: pairS => {
+            if (char == pair._1) (char, pair._2 + 1) :: pairS
+            else counterHelper(char, pairS)
+          }
+        }
+      }
+
+      timesHelper(chars, List[(Char, Int)]() )
+    }
   
   /**
    * Returns a list of `Leaf` nodes for a given frequency table `freqs`.
@@ -78,12 +115,44 @@ object Huffman {
    * head of the list should have the smallest weight), where the weight
    * of a leaf is the frequency of the character.
    */
-    def makeOrderedLeafList(freqs: List[(Char, Int)]): List[Leaf] = ???
+    def makeOrderedLeafList(freqs: List[(Char, Int)]): List[Leaf] = {
+      //insert sort
+      // add into List[Leaf]
+      def isort(freqs: List[(Char, Int)]): List[(Char, Int)] = {
+        freqs match {
+          case Nil => Nil
+          case pair :: pairS => insert(pair, isort(pairS))
+        }
+      }
+
+      def insert(pair: (Char, Int), sortedPairList: List[(Char, Int)]): List[(Char, Int)] = {
+        sortedPairList match {
+          case Nil => pair :: Nil
+          case sortedPair :: sortedPairTail=> {
+            if (pair._2 < sortedPair._2) pair :: sortedPairList
+            else sortedPair :: insert(pair, sortedPairTail)
+          }
+        }
+      }
+
+      def generateLeafList(sortedPairList: List[(Char, Int)]): List[Leaf] = {
+        sortedPairList match {
+          case Nil => List[Leaf]()
+          case x :: xs => Leaf(x._1, x._2) :: generateLeafList(xs)
+        }
+      }
+
+      val sortedFreqs = isort(freqs)
+      generateLeafList(sortedFreqs)
+
+    }
   
   /**
    * Checks whether the list `trees` contains only one single code tree.
    */
-    def singleton(trees: List[CodeTree]): Boolean = ???
+    def singleton(trees: List[CodeTree]): Boolean = {
+      trees.length == 1
+    }
   
   /**
    * The parameter `trees` of this function is a list of code trees ordered
@@ -97,7 +166,24 @@ object Huffman {
    * If `trees` is a list of less than two elements, that list should be returned
    * unchanged.
    */
-    def combine(trees: List[CodeTree]): List[CodeTree] = ???
+    def combine(trees: List[CodeTree]): List[CodeTree] = {
+      if (trees.length < 2) trees
+      else {
+        // merge the first two trees
+        val merged: Fork  = makeCodeTree(trees(0), trees(1))
+        // insert into the trees List
+        def insert(t: CodeTree, trees: List[CodeTree]): List[CodeTree] = {
+          trees match {
+            case Nil => List[CodeTree](t)
+            case x :: xs => {
+              if (weight(t) < weight(x) ) t :: trees
+              else x :: insert(t, xs)
+            }
+          }
+        }
+        insert(merged, trees..drop(2))
+      }
+    }
   
   /**
    * This function will be called in the following way:
@@ -135,7 +221,7 @@ object Huffman {
    * This function decodes the bit sequence `bits` using the code tree `tree` and returns
    * the resulting list of characters.
    */
-    def decode(tree: CodeTree, bits: List[Bit]): List[Char] = ???
+  def decode(tree: CodeTree, bits: List[Bit]): List[Char] = ???
   
   /**
    * A Huffman coding tree for the French language.
@@ -153,7 +239,7 @@ object Huffman {
   /**
    * Write a function that returns the decoded secret
    */
-    def decodedSecret: List[Char] = ???
+  def decodedSecret: List[Char] = ???
   
 
   // Part 4a: Encoding using Huffman tree
