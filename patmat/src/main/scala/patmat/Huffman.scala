@@ -1,7 +1,9 @@
 package patmat
 
 import common._
+import patmat.Huffman.chars
 
+import scala.collection.JavaConverters._
 import scala.collection.mutable
 
 /**
@@ -181,7 +183,7 @@ object Huffman {
             }
           }
         }
-        insert(merged, trees..drop(2))
+        insert(merged, trees.drop(2))
       }
     }
   
@@ -202,7 +204,10 @@ object Huffman {
    *    the example invocation. Also define the return type of the `until` function.
    *  - try to find sensible parameter names for `xxx`, `yyy` and `zzz`.
    */
-    def until(xxx: ???, yyy: ???)(zzz: ???): ??? = ???
+    def until(singleton: List[CodeTree] => Boolean, combine: List[CodeTree] => List[CodeTree])(trees: List[CodeTree]): List[CodeTree] = {
+      if (singleton(trees) ) trees
+      else until(singleton, combine)(combine(trees))
+    }
   
   /**
    * This function creates a code tree which is optimal to encode the text `chars`.
@@ -210,7 +215,12 @@ object Huffman {
    * The parameter `chars` is an arbitrary text. This function extracts the character
    * frequencies from that text and creates a code tree based on them.
    */
-    def createCodeTree(chars: List[Char]): CodeTree = ???
+    def createCodeTree(chars: List[Char]): CodeTree = {
+      val freqs: List[(Char, Int)] = times(chars)
+      val leafList: List[Leaf] = makeOrderedLeafList(freqs)
+      val singletonTree: List[CodeTree] = until(singleton, combine)(leafList)
+      singletonTree.head
+    }
   
 
   // Part 3: Decoding
@@ -221,7 +231,29 @@ object Huffman {
    * This function decodes the bit sequence `bits` using the code tree `tree` and returns
    * the resulting list of characters.
    */
-  def decode(tree: CodeTree, bits: List[Bit]): List[Char] = ???
+  def decode(tree: CodeTree, bits: List[Bit]): List[Char] = {
+
+    def decodeHelper(bits: List[Bit], root: CodeTree, prefix: List[Char]): List[Char] = {
+      root match {
+        case Leaf(_, _) => List[Char]()
+        case Fork(left, right, chars, weight) => {
+          bits match {
+            case Nil => prefix
+            case 0 :: bitsTail => {
+              left match {
+                case Leaf(_, _) => decodeHelper(bitsTail, tree, prefix ++ chars.take(1))
+                case _ => decodeHelper(bitsTail, left, prefix ++ chars.take(1))
+              }
+            }
+            case 1 :: bitsTail => {
+              right match {
+                case Leaf(_,_) => decodeHelper(bitsTail, tree, prefix ++ chars.take(1))
+                case _ => decodeHelper(bitsTail, right, prefix ++ chars.take(1))
+            }
+          }
+        }
+      }
+    }
   
   /**
    * A Huffman coding tree for the French language.
