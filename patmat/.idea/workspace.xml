@@ -32,8 +32,8 @@
       <file leaf-file-name="Huffman.scala" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/scala/patmat/Huffman.scala">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="91">
-              <caret line="127" column="7" lean-forward="true" selection-start-line="127" selection-start-column="7" selection-end-line="127" selection-end-column="7" />
+            <state relative-caret-position="482">
+              <caret line="258" column="3" lean-forward="true" selection-start-line="258" selection-start-column="3" selection-end-line="258" selection-end-column="3" />
               <folding>
                 <element signature="e#16#31#0" expanded="true" />
               </folding>
@@ -322,12 +322,12 @@
       <option name="presentableId" value="Default" />
       <updated>1522958785737</updated>
       <workItem from="1522958787464" duration="38038000" />
-      <workItem from="1523494162811" duration="25109000" />
+      <workItem from="1523494162811" duration="25258000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="63147000" />
+    <option name="totallyTimeSpent" value="63296000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="29" y="23" width="1634" height="933" extended-state="0" />
@@ -412,8 +412,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/scala/patmat/Huffman.scala">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="91">
-          <caret line="127" column="7" lean-forward="true" selection-start-line="127" selection-start-column="7" selection-end-line="127" selection-end-column="7" />
+        <state relative-caret-position="482">
+          <caret line="258" column="3" lean-forward="true" selection-start-line="258" selection-start-column="3" selection-end-line="258" selection-end-column="3" />
           <folding>
             <element signature="e#16#31#0" expanded="true" />
           </folding>

@@ -247,13 +247,16 @@ object Huffman {
             }
             case 1 :: bitsTail => {
               right match {
-                case Leaf(_,_) => decodeHelper(bitsTail, tree, prefix ++ chars.take(1))
+                case Leaf(_, _) => decodeHelper(bitsTail, tree, prefix ++ chars.take(1))
                 case _ => decodeHelper(bitsTail, right, prefix ++ chars.take(1))
+              }
             }
           }
         }
       }
     }
+  decodeHelper(bits, tree, List[Char]())
+  }
   
   /**
    * A Huffman coding tree for the French language.
