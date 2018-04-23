@@ -337,7 +337,19 @@ object Huffman {
    * a valid code tree that can be represented as a code table. Using the code tables of the
    * sub-trees, think of how to build the code table for the entire tree.
    */
-    def convert(tree: CodeTree): CodeTable = ???
+    def convert(tree: CodeTree): CodeTable = {
+      def convertHelper(tree: CodeTree, preBits: List[Bit]): CodeTable = {
+        tree match {
+          case Leaf(char, _) => List[(Char, List[Bit])](char, preBits): CodeTable
+          case Fork(left, right, char, _) => {
+            val l_codeTable = convertHelper(left, preBits ::: List(0))
+            val r_codeTable = convertHelper(right, preBits ::: List(1))
+            l_codeTable ::: r_codeTable
+          }
+        }
+      }
+      convert(tree)
+    }
   
   /**
    * This function takes two code tables and merges them into one. Depending on how you
