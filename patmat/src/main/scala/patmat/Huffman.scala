@@ -344,7 +344,7 @@ object Huffman {
           case Fork(left, right, char, _) => {
             val l_codeTable = convertHelper(left, preBits ::: List(0))
             val r_codeTable = convertHelper(right, preBits ::: List(1))
-            l_codeTable ::: r_codeTable
+            mergeCodeTables(l_codeTable, r_codeTable)
           }
         }
       }
@@ -356,7 +356,9 @@ object Huffman {
    * use it in the `convert` method above, this merge method might also do some transformations
    * on the two parameter code tables.
    */
-    def mergeCodeTables(a: CodeTable, b: CodeTable): CodeTable = ???
+    def mergeCodeTables(a: CodeTable, b: CodeTable): CodeTable = {
+      a ::: b
+    }
   
   /**
    * This function encodes `text` according to the code tree `tree`.
@@ -364,5 +366,19 @@ object Huffman {
    * To speed up the encoding process, it first converts the code tree to a code table
    * and then uses it to perform the actual encoding.
    */
-    def quickEncode(tree: CodeTree)(text: List[Char]): List[Bit] = ???
+    def quickEncode(tree: CodeTree)(text: List[Char]): List[Bit] = {
+      val table: CodeTable = convert(tree)
+      def quickEncodeChar(text: List[Char], preBits: List[Bit]): List[Bit] = {
+        text match {
+          case Nil => preBits
+          case chr :: chrTail => {
+            val bitList: List[Bit] = codeBits(table)(chr)
+            quickEncodeChar(chrTail, preBits ::: bitList)
+          }
+
+        }
+      }
+      quickEncodeChar(text, List[Bit]())
+    }
+
   }
