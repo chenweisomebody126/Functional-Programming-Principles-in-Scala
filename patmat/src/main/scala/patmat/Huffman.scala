@@ -30,8 +30,8 @@ object Huffman {
   // Part 1: Basics
   def weight(tree: CodeTree): Int = {
     tree match{
-      case Fork(left, right, chars, wt) => wt + weight(left) + weight(right)
-      case Leaf(char, weight) => weight
+      case Fork(left, right, chars, wt) => wt
+      case Leaf(char, wt) => wt
     }
   } // tree match ...
   
