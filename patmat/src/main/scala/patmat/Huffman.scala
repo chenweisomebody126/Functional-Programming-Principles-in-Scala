@@ -236,19 +236,19 @@ object Huffman {
     def decodeHelper(bits: List[Bit], root: CodeTree, prefix: List[Char]): List[Char] = {
       root match {
         case Leaf(_, _) => List[Char]()
-        case Fork(left, right, chars, weight) => {
+        case Fork(left, right, chars, wt) => {
           bits match {
             case Nil => prefix
             case 0 :: bitsTail => {
               left match {
-                case Leaf(_, _) => decodeHelper(bitsTail, tree, prefix ++ chars.take(1))
-                case _ => decodeHelper(bitsTail, left, prefix ++ chars.take(1))
+                case Leaf(chr, _) => decodeHelper(bitsTail, tree, prefix ::: List[Char](chr))
+                case _ => decodeHelper(bitsTail, left, prefix)
               }
             }
             case 1 :: bitsTail => {
               right match {
-                case Leaf(_, _) => decodeHelper(bitsTail, tree, prefix ++ chars.take(1))
-                case _ => decodeHelper(bitsTail, right, prefix ++ chars.take(1))
+                case Leaf(chr, _) => decodeHelper(bitsTail, tree, prefix ::: List[Char](chr))
+                case _ => decodeHelper(bitsTail, right, prefix)
               }
             }
           }
@@ -303,7 +303,7 @@ object Huffman {
             val l_code = getCodeForChar(left, chr, path ::: List(0))
             val r_code = getCodeForChar(right, chr, path ::: List(1))
             if (l_code.isEmpty)  r_code
-            else r_code
+            else l_code
           }
         }
 

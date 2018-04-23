@@ -32,8 +32,8 @@
       <file leaf-file-name="Huffman.scala" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/scala/patmat/Huffman.scala">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="104">
-              <caret line="36" column="2" lean-forward="true" selection-start-line="36" selection-start-column="2" selection-end-line="36" selection-end-column="2" />
+            <state relative-caret-position="448">
+              <caret line="257" column="40" lean-forward="true" selection-start-line="257" selection-start-column="40" selection-end-line="257" selection-end-column="40" />
               <folding>
                 <element signature="e#16#31#0" expanded="true" />
               </folding>
@@ -44,8 +44,8 @@
       <file leaf-file-name="HuffmanSuite.scala" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/test/scala/patmat/HuffmanSuite.scala">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="208">
-              <caret line="19" column="0" lean-forward="false" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
+            <state relative-caret-position="302">
+              <caret line="49" column="19" lean-forward="false" selection-start-line="49" selection-start-column="19" selection-end-line="49" selection-end-column="19" />
               <folding />
             </state>
           </provider>
@@ -393,7 +393,7 @@
       <updated>1522958785737</updated>
       <workItem from="1522958787464" duration="38038000" />
       <workItem from="1523494162811" duration="26245000" />
-      <workItem from="1524505890415" duration="7977000" />
+      <workItem from="1524505890415" duration="9252000" />
     </task>
     <servers />
   </component>
@@ -407,9 +407,15 @@
     <history-entry file="All_in_root_(2) - 2018.04.23 at 13h 32m 58s.xml">
       <configuration name="All in root (2)" configurationId="JUnit" />
     </history-entry>
+    <history-entry file="All_in_root_(2) - 2018.04.23 at 13h 37m 40s.xml">
+      <configuration name="All in root (2)" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="All_in_root_(2) - 2018.04.23 at 13h 54m 25s.xml">
+      <configuration name="All in root (2)" configurationId="JUnit" />
+    </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="72260000" />
+    <option name="totallyTimeSpent" value="73535000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="4" y="23" width="1572" height="933" extended-state="0" />
@@ -520,16 +526,16 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/test/scala/patmat/HuffmanSuite.scala">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="208">
-          <caret line="19" column="0" lean-forward="false" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
+        <state relative-caret-position="302">
+          <caret line="49" column="19" lean-forward="false" selection-start-line="49" selection-start-column="19" selection-end-line="49" selection-end-column="19" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/scala/patmat/Huffman.scala">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="104">
-          <caret line="36" column="2" lean-forward="true" selection-start-line="36" selection-start-column="2" selection-end-line="36" selection-end-column="2" />
+        <state relative-caret-position="448">
+          <caret line="257" column="40" lean-forward="true" selection-start-line="257" selection-start-column="40" selection-end-line="257" selection-end-column="40" />
           <folding>
             <element signature="e#16#31#0" expanded="true" />
           </folding>
