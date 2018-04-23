@@ -30,7 +30,7 @@ object Huffman {
   // Part 1: Basics
   def weight(tree: CodeTree): Int = {
     tree match{
-      case Fork(left, right, chars, weight) => weight + weight(left) + weight(right)
+      case Fork(left, right, chars, wt) => wt + weight(left) + weight(right)
       case Leaf(char, weight) => weight
     }
   } // tree match ...
@@ -340,8 +340,8 @@ object Huffman {
     def convert(tree: CodeTree): CodeTable = {
       def convertHelper(tree: CodeTree, preBits: List[Bit]): CodeTable = {
         tree match {
-          case Leaf(char, _) => List[(Char, List[Bit])](char, preBits): CodeTable
-          case Fork(left, right, char, _) => {
+          case Leaf(char, _) => List[(Char, List[Bit])]() :+ ((char, preBits)): CodeTable
+          case Fork(left, right, _, _) => {
             val l_codeTable = convertHelper(left, preBits ::: List(0))
             val r_codeTable = convertHelper(right, preBits ::: List(1))
             mergeCodeTables(l_codeTable, r_codeTable)
