@@ -63,7 +63,7 @@ object Anagrams {
   /** Returns all the anagrams of a given word. */
   def wordAnagrams(word: Word): List[Word] = {
     val o = wordOccurrences(word)
-    dictionaryByOccurrences.get(o)
+    dictionaryByOccurrences.get(o).getOrElse(Nil)
   }
 
   /** Returns the list of all subsets of the occurrence list.
@@ -88,7 +88,36 @@ object Anagrams {
    *  Note that the order of the occurrence list subsets does not matter -- the subsets
    *  in the example above could have been displayed in some other order.
    */
-  def combinations(occurrences: Occurrences): List[Occurrences] = ???
+  def combinations(occurrences: Occurrences): List[Occurrences] = {
+    occurrences match {
+      case Nil => List(List(): Occurrences)
+      case o :: oTail => {
+        val remainSubset: List[Occurrences] = combinations(oTail)
+        def getCurrSubset(o: (Char, Int)): List[Occurrences] = {
+          var currSubset: List[Occurrences] = List[Occurrences](List())
+          for (t  <- 1 to o._2){
+            val newo: Occurrences = List(o._1, t)
+            currSubset = new Occurences(o._1, t) :: currSubset
+          }
+        }
+
+        val curr_remain_pairs: List[(Occurrences, Occurrences)] = for {
+          curr_o <- getCurrSubset(o)
+          remain_o <- remainSubset
+        } yield (curr_o, remain_o)
+
+        curr_remain_pairs.map(pair => {
+          pair match{
+            case (List(), List()) =>  List()
+            case (List(), remain_o) =>  remain_o
+            case (curr_o, List()) =>  curr_o
+            case (curr_o, remain_o) =>  curr_o ::: remain_o
+          }
+        })
+
+      }
+    }
+  }
 
   /** Subtracts occurrence list `y` from occurrence list `x`.
    *
