@@ -94,7 +94,7 @@ object Anagrams {
       case o :: oTail => {
         val remainSubset: List[Occurrences] = combinations(oTail)
         for {
-          t <- 0 to o._2 //List.range(0, o._2+1)
+          t <- List.range(0, o._2+1) // 0 to o._2 //
           remain_o <- remainSubset
         } yield if (t == 0) remain_o else (o._1, t) :: remain_o
       }
@@ -165,5 +165,19 @@ object Anagrams {
    *
    *  Note: There is only one anagram of an empty sentence.
    */
-  def sentenceAnagrams(sentence: Sentence): List[Sentence] = ???
+  def sentenceAnagrams(sentence: Sentence): List[Sentence] = {
+    val sentOccu: Occurrences = sentenceOccurrences(sentence)
+    def sentenceAnagramsHelper(so: Occurrences): List[Sentence] ={
+      val occuSubset: List[Occurrences] = combinations(so)
+      for {
+        occu <- occuSubset
+        ana <- dictionaryByOccurrences(occu)
+        //ana <- sentenceAnagramsHelper(occu)
+        remain_ana_sent <- sentenceAnagramsHelper(subtract(so, occu))
+      } yield if (ana.isEmpty) remain_ana_sent else ana :: remain_ana_sent
+    }
+    sentenceAnagramsHelper(sentOccu)
+  }
+
+
 }
