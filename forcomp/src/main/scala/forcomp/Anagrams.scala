@@ -90,34 +90,17 @@ object Anagrams {
    */
   def combinations(occurrences: Occurrences): List[Occurrences] = {
     occurrences match {
-      case Nil => List(List(): Occurrences)
+      case Nil => List(Nil)
       case o :: oTail => {
         val remainSubset: List[Occurrences] = combinations(oTail)
-        def getCurrSubset(o: (Char, Int)): List[Occurrences] = {
-          var currSubset: List[Occurrences] = List[Occurrences](List())
-          for (t  <- 1 to o._2){
-            val newo: Occurrences = List(o._1, t)
-            currSubset = new Occurences(o._1, t) :: currSubset
-          }
-        }
-
-        val curr_remain_pairs: List[(Occurrences, Occurrences)] = for {
-          curr_o <- getCurrSubset(o)
+        for {
+          t <- 0 to o._2 //List.range(0, o._2+1)
           remain_o <- remainSubset
-        } yield (curr_o, remain_o)
-
-        curr_remain_pairs.map(pair => {
-          pair match{
-            case (List(), List()) =>  List()
-            case (List(), remain_o) =>  remain_o
-            case (curr_o, List()) =>  curr_o
-            case (curr_o, remain_o) =>  curr_o ::: remain_o
-          }
-        })
-
+        } yield if (t == 0) remain_o else (o._1, t) :: remain_o
       }
     }
   }
+
 
   /** Subtracts occurrence list `y` from occurrence list `x`.
    *
@@ -129,7 +112,18 @@ object Anagrams {
    *  Note: the resulting value is an occurrence - meaning it is sorted
    *  and has no zero-entries.
    */
-  def subtract(x: Occurrences, y: Occurrences): Occurrences = ???
+  def subtract(x: Occurrences, y: Occurrences): Occurrences = {
+    var xMap = x.toMap
+    for (yo <- y) {
+      val chr: Char = yo._1
+      val ycount: Int = yo._2
+      val count:Int = xMap(chr) - ycount
+      if (count == 0)
+        xMap - chr
+      else xMap(chr) = count
+    }
+    xMap.toList
+  }
 
   /** Returns a list of all anagram sentences of the given sentence.
    *
