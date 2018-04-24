@@ -35,7 +35,7 @@ object Anagrams {
    *  Note: you must use `groupBy` to implement this method!
    */
   def wordOccurrences(w: Word): Occurrences = {
-    w.toLowerCase().toCharArray().groupBy((chr: Char) => chr).mapValues(_.length)
+    w.toLowerCase().toCharArray().groupBy((chr: Char) => chr).mapValues(_.length).toList.sortBy(_._1)
   }
 
   /** Converts a sentence into its character occurrence list. */
@@ -119,8 +119,8 @@ object Anagrams {
       val ycount: Int = yo._2
       val count:Int = xMap(chr) - ycount
       if (count == 0)
-        xMap - chr
-      else xMap(chr) = count
+        xMap -= chr
+      else xMap.updated(chr, count)
     }
     xMap.toList
   }
