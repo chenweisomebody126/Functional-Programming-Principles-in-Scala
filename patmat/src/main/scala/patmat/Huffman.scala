@@ -235,26 +235,20 @@ object Huffman {
 
     def decodeHelper(bits: List[Bit], root: CodeTree, prefix: List[Char]): List[Char] = {
       root match {
-        case Leaf(_, _) => List[Char]()
-        case Fork(left, right, chars, wt) => {
+        case Leaf(chr, _) => {
+          if (bits.isEmpty) prefix
+          else decodeHelper(bits, tree, prefix ::: List(chr))
+        }
+        case Fork(l,r, _, _) => {
           bits match {
             case Nil => prefix
-            case 0 :: bitsTail => {
-              left match {
-                case Leaf(chr, _) => decodeHelper(bitsTail, tree, prefix ::: List[Char](chr))
-                case _ => decodeHelper(bitsTail, left, prefix)
-              }
-            }
-            case 1 :: bitsTail => {
-              right match {
-                case Leaf(chr, _) => decodeHelper(bitsTail, tree, prefix ::: List[Char](chr))
-                case _ => decodeHelper(bitsTail, right, prefix)
-              }
-            }
+            case 0 :: tail0 => decodeHelper(tail0, l, prefix)
+            case 1 :: tail1 => decodeHelper(tail1, r, prefix)
+            case _ => throw new IllegalArgumentException
           }
         }
       }
-    }
+
   decodeHelper(bits, tree, List[Char]())
   }
   

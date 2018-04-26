@@ -4,7 +4,7 @@
 		module="patmat-build"
 		revision="0.1-SNAPSHOT"
 		status="integration"
-		publication="20180405130636"
+		publication="20180425172840"
 		e:sbtVersion="0.13" e:scalaVersion="2.10"
 	>
 		<description>
