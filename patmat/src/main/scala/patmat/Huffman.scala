@@ -37,8 +37,8 @@ object Huffman {
   
   def chars(tree: CodeTree): List[Char] = {
     tree match{
-      case Fork(left, right, chars, weight) => chars
-      case Leaf(char, weight) => char :: Nil
+      case Fork(left, right, chars, _) => chars
+      case Leaf(char, _) => char :: Nil
     }
   } // tree match ...
   
