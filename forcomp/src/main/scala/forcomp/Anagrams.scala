@@ -103,7 +103,6 @@ object Anagrams {
 
 
   /** Subtracts occurrence list `y` from occurrence list `x`.
-   *
    *  The precondition is that the occurrence list `y` is a subset of
    *  the occurrence list `x` -- any character appearing in `y` must
    *  appear in `x`, and its frequency in `y` must be smaller or equal
